@@ -1,4 +1,11 @@
 {
+  "item.deathcharm.death_charm": "Death Charm",
+
+  "tooltip.deathcharm.deathcharm.usesleft": "§5Uses Left: %1$s§r",
+  "tooltip.deathcharm.deathcharm.description": "§7Allows you to keep your items after death.§r",
+
+  "itemgroup.deathcharm": "Death Charm",
+
   "deathcharm.configuration.title": "Death Charm Settings",
   "deathcharm.configuration.section.deathcharm.common.toml": "Death Charm Settings",
   "deathcharm.configuration.section.deathcharm.common.toml.title": "Death Charm Settings"

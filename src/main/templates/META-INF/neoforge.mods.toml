@@ -8,7 +8,6 @@ displayName="${mod_name}"
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/"
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/"
 #logoFile="examplemod.png"
-credits=""
 authors="${mod_authors}"
 description='''${mod_description}'''
 
