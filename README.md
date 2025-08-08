@@ -1,5 +1,5 @@
 # Death Charm
-A reasonable middle-ground to the Keep Inventory debate - Death Charm adds a Death Charm (funnily enough) that has a limited number of uses before it must be re-created.
+A incredibly simple NeoForge mod that adds a reasonable middle-ground to the Keep Inventory debate. It adds a Death Charm (funnily enough) that has a limited number of uses before it must be re-created.
 
 By default it has 3 uses before it is destroyed (configurable). When you die, it uses up a use and restores your items upon respawn.
 
