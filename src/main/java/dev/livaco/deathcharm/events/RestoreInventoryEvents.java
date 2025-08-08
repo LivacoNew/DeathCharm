@@ -56,9 +56,12 @@ public class RestoreInventoryEvents {
             break;
         }
 
-        if(!found)
+        if(!found) {
+            DeathCharm.LOGGER.info("No Death Charm found on player {} [{}].", player.getDisplayName().getString(), player.getStringUUID());
             return; // lose your stuff :(
+        }
 
+        DeathCharm.LOGGER.info("{} [{}] had charm, inventory added to list to restore.", player.getDisplayName().getString(), player.getStringUUID());
         inventoriesToRestore.put(player.getUUID(), inventory);
     }
 
@@ -69,6 +72,7 @@ public class RestoreInventoryEvents {
         if(!inventoriesToRestore.containsKey(player.getUUID()))
             return;
 
+        DeathCharm.LOGGER.info("Prevented drops for {} [{}].", player.getDisplayName().getString(), player.getStringUUID());
         event.getDrops().clear();
     }
 
@@ -83,5 +87,6 @@ public class RestoreInventoryEvents {
             player.getInventory().add(stack);
         }
         inventoriesToRestore.remove(player.getUUID());
+        DeathCharm.LOGGER.info("Restored inventory for {} [{}].", player.getDisplayName().getString(), player.getStringUUID());
     }
 }
