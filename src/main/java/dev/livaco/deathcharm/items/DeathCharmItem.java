@@ -3,7 +3,6 @@ package dev.livaco.deathcharm.items;
 import dev.livaco.deathcharm.Config;
 import dev.livaco.deathcharm.datacomponents.RemainingUsesComponent;
 import dev.livaco.deathcharm.registration.DataComponentsRegistration;
-import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,6 +20,7 @@ public class DeathCharmItem extends Item {
                 .rarity(Rarity.UNCOMMON));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
         // I'm aware this is deprecated, but I can't find any reference as to what your meant to do instead of this? Every 1.21.8 mod I could find uses this still

@@ -1,11 +1,9 @@
 package dev.livaco.deathcharm.registration;
 
-import com.mojang.serialization.Codec;
 import dev.livaco.deathcharm.DeathCharm;
 import dev.livaco.deathcharm.datacomponents.RemainingUsesComponent;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
