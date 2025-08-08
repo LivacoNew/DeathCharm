@@ -5,6 +5,8 @@ import dev.livaco.deathcharm.DeathCharm;
 import dev.livaco.deathcharm.datacomponents.RemainingUsesComponent;
 import dev.livaco.deathcharm.registration.DataComponentsRegistration;
 import dev.livaco.deathcharm.registration.ItemRegistration;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -18,18 +20,23 @@ import java.util.List;
 import java.util.UUID;
 
 public class RestoreInventoryEvents {
-    private HashMap<UUID, List<ItemStack>> inventoriesToRestore = new HashMap<>();
+    private HashMap<UUID, NonNullList<ItemStack>> inventoriesToRestore = new HashMap<>();
 
     @SubscribeEvent
     public void onLivingDeath(LivingDeathEvent event) {
         if(!(event.getEntity() instanceof Player player))
             return;
 
-        ArrayList<ItemStack> inventory = new ArrayList<>(player.getInventory().getNonEquipmentItems().stream().toList());
-        inventory.add(player.getInventory().getSelectedItem());
+        Inventory inventory = player.getInventory();
+        // Clone the inventory and maintain the slots
+        // This is probably expensive? Any way to clone the Inventory directly?
+        NonNullList<ItemStack> inventoryContents = NonNullList.withSize(inventory.getContainerSize(), ItemStack.EMPTY);
+        for(int i = 0; i < inventory.getContainerSize(); i++) {
+            inventoryContents.set(i, inventory.getItem(i).copy());
+        }
 
         boolean found = false;
-        for(ItemStack stack : inventory) {
+        for(ItemStack stack : inventoryContents) {
             if(stack.getItem() != ItemRegistration.DEATH_CHARM.get())
                 continue;
 
@@ -61,8 +68,8 @@ public class RestoreInventoryEvents {
             return; // lose your stuff :(
         }
 
+        inventoriesToRestore.put(player.getUUID(), inventoryContents);
         DeathCharm.LOGGER.info("{} [{}] had charm, inventory added to list to restore.", player.getDisplayName().getString(), player.getStringUUID());
-        inventoriesToRestore.put(player.getUUID(), inventory);
     }
 
     @SubscribeEvent
@@ -83,8 +90,9 @@ public class RestoreInventoryEvents {
             return;
 
         // Restore their stuff
-        for(ItemStack stack : inventoriesToRestore.get(player.getUUID())) {
-            player.getInventory().add(stack);
+        NonNullList<ItemStack> inventoryContents = inventoriesToRestore.get(player.getUUID());
+        for(int i = 0; i < inventoryContents.size(); i++) {
+            player.getInventory().setItem(i, inventoryContents.get(i));
         }
         inventoriesToRestore.remove(player.getUUID());
         DeathCharm.LOGGER.info("Restored inventory for {} [{}].", player.getDisplayName().getString(), player.getStringUUID());
