@@ -8,4 +8,6 @@ By default it has 3 uses before it is destroyed (configurable). When you die, it
 ![The recipe for the Death Charm; 4 Iron Ingots in each corner, a Bone in the middle with Diamonds filling the remaining slots.](https://i.imgur.com/PSaPFSS.png)
 
 ## Download
-i'll upload it somewhere in a bit lol
+Download the GitHub release and put the .jar file into your `mods` folder. 
+
+Curseforge/Modrinth pages are coming soon hopefully, just waiting for moderators to review it.
