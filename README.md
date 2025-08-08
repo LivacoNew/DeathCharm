@@ -4,6 +4,7 @@ A reasonable middle-ground to the Keep Inventory debate - Death Charm adds a Dea
 By default it has 3 uses before it is destroyed (configurable). When you die, it uses up a use and restores your items upon respawn.
 
 ![The Death Charm sitting in a Player's inventory, with a hovered tooltip showing it has 3 uses left.](https://i.imgur.com/Znv7h60.png)
+
 ![The recipe for the Death Charm; 4 Iron Ingots in each corner, a Bone in the middle with Diamonds filling the remaining slots.](https://i.imgur.com/PSaPFSS.png)
 
 ## Download
