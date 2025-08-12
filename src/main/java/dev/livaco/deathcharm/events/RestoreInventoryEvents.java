@@ -2,6 +2,7 @@ package dev.livaco.deathcharm.events;
 
 import dev.livaco.deathcharm.Config;
 import dev.livaco.deathcharm.DeathCharm;
+import dev.livaco.deathcharm.PlayerInventory;
 import dev.livaco.deathcharm.datacomponents.RemainingUsesComponent;
 import dev.livaco.deathcharm.registration.DataComponentsRegistration;
 import dev.livaco.deathcharm.registration.ItemRegistration;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class RestoreInventoryEvents {
-    private HashMap<UUID, NonNullList<ItemStack>> inventoriesToRestore = new HashMap<>();
+    private final HashMap<UUID, PlayerInventory> inventoriesToRestore = new HashMap<>();
 
     @SubscribeEvent
     public void onLivingDeath(LivingDeathEvent event) {
@@ -26,12 +27,7 @@ public class RestoreInventoryEvents {
             return;
 
         Inventory inventory = player.getInventory();
-        // Clone the inventory and maintain the slots
-        // This is probably expensive? Any way to clone the Inventory directly?
-        NonNullList<ItemStack> inventoryContents = NonNullList.withSize(inventory.getContainerSize(), ItemStack.EMPTY);
-        for(int i = 0; i < inventory.getContainerSize(); i++) {
-            inventoryContents.set(i, inventory.getItem(i).copy());
-        }
+        NonNullList<ItemStack> inventoryContents = inventory.getNonEquipmentItems();
 
         boolean found = false;
         for(ItemStack stack : inventoryContents) {
@@ -66,7 +62,8 @@ public class RestoreInventoryEvents {
             return; // lose your stuff :(
         }
 
-        inventoriesToRestore.put(player.getUUID(), inventoryContents);
+        PlayerInventory playerInventory = new PlayerInventory(player);
+        inventoriesToRestore.put(player.getUUID(), playerInventory);
         DeathCharm.LOGGER.info("{} [{}] had charm, inventory added to list to restore.", player.getDisplayName().getString(), player.getStringUUID());
     }
 
@@ -88,10 +85,7 @@ public class RestoreInventoryEvents {
             return;
 
         // Restore their stuff
-        NonNullList<ItemStack> inventoryContents = inventoriesToRestore.get(player.getUUID());
-        for(int i = 0; i < inventoryContents.size(); i++) {
-            player.getInventory().setItem(i, inventoryContents.get(i));
-        }
+        inventoriesToRestore.get(player.getUUID()).restoreToPlayer(player);
         inventoriesToRestore.remove(player.getUUID());
         DeathCharm.LOGGER.info("Restored inventory for {} [{}].", player.getDisplayName().getString(), player.getStringUUID());
     }
