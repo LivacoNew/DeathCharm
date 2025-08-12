@@ -10,7 +10,6 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 public class DeathCharmItem extends Item {
@@ -21,6 +20,7 @@ public class DeathCharmItem extends Item {
                 .rarity(Rarity.UNCOMMON));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltipDisplay, tooltipAdder, flag);
