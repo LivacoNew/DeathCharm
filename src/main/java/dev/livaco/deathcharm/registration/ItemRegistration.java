@@ -13,7 +13,7 @@ public class ItemRegistration {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(DeathCharm.MODID);
 
     public static final DeferredItem<Item> DEATH_CHARM = ITEMS.register("death_charm", registryName -> new DeathCharmItem(
-            new Item.Properties()
+            new Item.Properties().setId(ResourceKey.create(Registries.ITEM, registryName))
     ));
 
     public static void register(IEventBus bus) {
