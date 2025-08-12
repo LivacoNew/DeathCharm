@@ -27,7 +27,7 @@ public class RestoreInventoryEvents {
             return;
 
         Inventory inventory = player.getInventory();
-        NonNullList<ItemStack> inventoryContents = inventory.items;
+        NonNullList<ItemStack> inventoryContents = inventory.getNonEquipmentItems();
 
         boolean found = false;
         for(ItemStack stack : inventoryContents) {

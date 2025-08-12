@@ -8,8 +8,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class DeathCharmItem extends Item {
     public DeathCharmItem(Properties properties) {
@@ -20,13 +22,13 @@ public class DeathCharmItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+    public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
+        super.appendHoverText(stack, context, tooltipDisplay, tooltipAdder, flag);
 
         RemainingUsesComponent remaining = stack.get(DataComponentsRegistration.USES_LEFT.get());
         if(remaining != null && Config.CHARM_USES.getAsInt() != 0)
-            tooltipComponents.add(Component.translatable("tooltip.deathcharm.deathcharm.usesleft", remaining.usesLeft()));
+            tooltipAdder.accept(Component.translatable("tooltip.deathcharm.deathcharm.usesleft", remaining.usesLeft()));
 
-        tooltipComponents.add(Component.translatable("tooltip.deathcharm.deathcharm.description"));
+        tooltipAdder.accept(Component.translatable("tooltip.deathcharm.deathcharm.description"));
     }
 }
