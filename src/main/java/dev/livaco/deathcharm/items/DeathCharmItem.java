@@ -14,6 +14,7 @@ import java.util.List;
 public class DeathCharmItem extends Item {
     public DeathCharmItem(Properties properties) {
         super(properties.stacksTo(1)
+                .setNoCombineRepair()
                 .component(DataComponentsRegistration.USES_LEFT.get(), new RemainingUsesComponent(Config.CHARM_USES.getAsInt()))
                 .rarity(Rarity.UNCOMMON));
     }
